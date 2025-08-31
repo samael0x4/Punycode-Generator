@@ -1,17 +1,39 @@
-# Punycode-Generator
-A Python tool for generating Punycode / Homoglyph variants of alphabets (a-z, A-Z).
-Created with ❤️ by samael_0x4
+# 🔥 punycode_gen - Homoglyph/Punycode Generator
 
-💀 Useful for red-teamers, bug bounty hunters, and security researchers testing IDN homograph attacks and phishing detection bypasses.
+`punycode_gen` is a Python tool that generates homoglyph (punycode) variants for alphabets `a-z` and `A-Z`.  
+Useful for security research, phishing awareness, domain spoofing studies, and bug bounty recon.  
 
-🚀 Features
+---
 
-Generate homoglyphs for any alphabet (a-z, A-Z)
+## 🚀 Features
+- Generate unlimited homoglyphs for English alphabets.
+- Supports both lowercase and uppercase.
+- Clean interactive menu.
+- Banner branded with **samael_0x4**.
 
-Show Punycode representation (xn--...) instantly
+---
 
-Simple interactive menu-driven CLI
+## 📦 Installation
 
-Cross-platform: works on Linux (Kali, Ubuntu, etc.), macOS, and Windows
+### Linux / Kali / Parrot
+```bash
+git clone https://github.com/samael0x4/punycode_gen.git
+cd punycode_gen
+python3 punycode_gen.py
+```
+### macOS 
+```bash
+git clone https://github.com/samael0x4/punycode_gen.git
+cd punycode_gen
+python3 punycode_gen.py
+```
 
-Branded banner + clean code
+### Windows 
+
+Install Python 3.x \
+Clone or download this repository.
+Run:
+```bash
+cd punycode_gen
+python punycode_gen.py
+```
