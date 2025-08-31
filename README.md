@@ -1,26 +1,27 @@
-# 🔥 punycode_gen - Homoglyph/Punycode Generator
+# 🕶️ punycode_gen  
 
-`punycode_gen` is a Python tool that generates homoglyph (punycode) variants for alphabets `a-z` and `A-Z`.  
-Useful for security research, phishing awareness, domain spoofing studies, and bug bounty recon.  
-
----
-
-## 🚀 Features
-- Generate unlimited homoglyphs for English alphabets.
-- Supports both lowercase and uppercase.
-- Clean interactive menu.
-- Banner branded with **samael_0x4**.
+Punycode & Homoglyph Generator — a python tool by **samael_0x4**.  
+Generate **Unicode homoglyphs** for alphabets (a-z, A-Z) or **Punycode** for domains.  
 
 ---
 
-## 📦 Installation
+## 🔥 Features
+- Generate homoglyph variants for single alphabets (`a`, `b`, `A`, `Z` etc.)
+- Encode full domains into punycode (`google.com` → `xn--...`)
+- Clean hacker-style banner
+- No external dependencies (pure Python3)
 
-### Linux / Kali / Parrot
+---
+
+## ⚙️ Installation  
+
+### Linux 
 ```bash
 git clone https://github.com/samael0x4/punycode_gen.git
 cd punycode_gen
 python3 punycode_gen.py
 ```
+
 ### macOS 
 ```bash
 git clone https://github.com/samael0x4/punycode_gen.git
@@ -29,11 +30,8 @@ python3 punycode_gen.py
 ```
 
 ### Windows 
-
-Install Python 3.x \
-Clone or download this repository.
-Run:
 ```bash
+git clone https://github.com/samael0x4/punycode_gen.git
 cd punycode_gen
 python punycode_gen.py
 ```
@@ -42,22 +40,21 @@ python punycode_gen.py
 
 Python 3.x
 
-### 🛠 Usage
+### 🧑‍💻 Usage
 ```bash
 python3 punycode_gen.py
 ```
+## OUTPUT 
+Choose an option:
 
-### Example:
+1) Generate homoglyphs for single alphabet
+2) Generate punycode for a domain
+3) Exit
 
-Options:
-1) Enter Alphabet
-2) Exit
+## Example 1 — Homoglyphs
+Enter Alphabet (a-z or A-Z): a
 
-Select an option: 1
-Enter an alphabet (a-z or A-Z): a
-
-[+] Punycode / homoglyph variants for 'a':
-
+[+] Homoglyph variants for 'a':
 à\
 á\
 â\
@@ -65,11 +62,17 @@ Enter an alphabet (a-z or A-Z): a
 ä\
 å\
 ɑ\
-а\
 ạ\
+ă\
 ą\
-ǎ\
-ª
+ª\
+ā
+
+## Example 2 — Domain
+Enter Domain (example: google.com): google.com
+
+[+] Domain: google.com
+[+] Punycode: google.com
 
 ### 📜 License
 
@@ -78,8 +81,9 @@ This project is licensed under the MIT License – see the LICENSE
 
  ### ⚠️ Disclaimer
 
-This tool is made for educational and research purposes only.
-The author (samael_0x4) is not responsible for any misuse, illegal activities, or damages caused by this tool.
+This project is created for educational and research purposes only.
+The author (samael_0x4) is not responsible for any misuse or damage caused.
+Use it responsibly, stay ethical. 👾
 
 ### 💬 Support
 
