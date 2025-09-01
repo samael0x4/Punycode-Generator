@@ -1,89 +1,79 @@
-# 🕶️ punycode_gen  
-
-Punycode & Homoglyph Generator — a python tool by **samael_0x4**.  
-Generate **Unicode homoglyphs** for alphabets (a-z, A-Z) or **Punycode** for domains.  
+# PunyChain — Punycode / Homoglyph Recon & CSP Chain Tool
+**PunyChain** (by `samael_0x4`) extends punycode/homoglyph recon with a header scanner, weak-CSP detector, and POC builder to help bug hunters test chained attack surfaces (homoglyphs → header misconfig → code load).
 
 ---
 
-## 🔥 Features
-- Generate homoglyph variants for single alphabets (`a`, `b`, `A`, `Z` etc.)
-- Encode full domains into punycode (`google.com` → `xn--...`)
-- Clean hacker-style banner
-- No external dependencies (pure Python3)
+## Features
+- Generate homoglyph variants for domains and single alphabet characters.
+- Fetch headers and analyze Content-Security-Policy & security headers.
+- Detect weak CSP indicators (`unsafe-inline`, wildcards, missing script-src).
+- Generate local POC HTML snippets showing how a homoglyph-hosted script could be loaded.
+- Optional DNS resolution check for generated homoglyph domains.
 
 ---
 
-## ⚙️ Installation  
+## Install (Linux / macOS / Windows)
 
-### Linux 
 ```bash
-git clone https://github.com/samael0x4/punycode_gen.git
-cd punycode_gen
-python3 punycode_gen.py
+# clone repo
+git clone https://github.com/samael0x4/PunyChain.git
+cd PunyChain
 ```
 
-### macOS 
+# create venv (recommended)
 ```bash
-git clone https://github.com/samael0x4/punycode_gen.git
-cd punycode_gen
-python3 punycode_gen.py
+python3 -m venv venv
+source venv/bin/activate    # macOS / Linux
+venv\Scripts\activate       # Windows PowerShell
 ```
-
-### Windows 
+# install deps
 ```bash
-git clone https://github.com/samael0x4/punycode_gen.git
-cd punycode_gen
-python punycode_gen.py
+pip install -r requirements.txt
+```
+# run directly
+```bash
+python punychain.py -h
 ```
 
 ### 📋 Requirements
 
 Python 3.x
 
-### 🧑‍💻 Usage
+### 🧑‍💻 Usage Examples
+1) Show homoglyphs for a single character
 ```bash
-python3 punycode_gen.py
+python punychain.py -a a
 ```
-## OUTPUT 
-Choose an option:
+2) Scan headers / CSP for a target
+```bash
+python punychain.py -d tesla.com --scan-headers
+```
+3) Generate homoglyph variants for a domain
+```bash
+python punychain.py -d tesla.com --generate
+```
+4) Generate variants + try DNS resolution + generate POC files
+```bash
+python punychain.py -d tesla.com --generate --resolve --build-pocs
 
-1) Generate homoglyphs for single alphabet
-2) Generate punycode for a domain
-3) Exit
+# This will write poc_*.html files to current directory for quick review.
+```
+### How it helps bug hunters
 
-## Example 1 — Homoglyphs
-Enter Alphabet (a-z or A-Z): a
+Recon layer: find homoglyph domains that impersonate the target (used in phishing or resource hosting).
 
-[+] Homoglyph variants for 'a':
-à\
-á\
-â\
-ã\
-ä\
-å\
-ɑ\
-ạ\
-ă\
-ą\
-ª\
-ā
+Detection layer: identify weak CSPs and missing headers that could allow external script loading.
 
-## Example 2 — Domain
-Enter Domain (example: google.com): google.com
-
-[+] Domain: google.com
-[+] Punycode: google.com
+POC layer: produce quick test files to demonstrate how a homoglyph-hosted script would be included if the CSP allows it.
 
 ### 📜 License
 
 This project is licensed under the MIT License – see the LICENSE
  file for details.
 
- ### ⚠️ Disclaimer
+### Ethics & Disclaimer
 
-This project is created for educational and research purposes only.
-The author (samael_0x4) is not responsible for any misuse or damage caused.
-Use it responsibly, stay ethical. 👾
+This tool is for authorized security testing only (bug bounty programs, pentests with permission, educational labs). Do NOT use this against systems you don't have permission to test. The author (samael_0x4) is not responsible for misuse.
 
 ### 💬 Support
 
