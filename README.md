@@ -1,5 +1,5 @@
 # PunyChain — Punycode / Homoglyph Recon & CSP Chain Tool
-**PunyChain** (by `samael_0x4`) extends punycode/homoglyph recon with a header scanner, weak-CSP detector, and POC builder to help bug hunters test chained attack surfaces (homoglyphs → header misconfig → code load).
+**PunyChain**  extends punycode/homoglyph recon with a **header scanner**, **weak-CSP detector**, and **POC builder** to help bug hunters test chained attack surfaces (homoglyphs → header misconfig → code load).
 
 ---
 
