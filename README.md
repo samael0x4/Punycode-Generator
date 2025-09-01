@@ -65,7 +65,11 @@ python punychain.py -h
 
 ### 📋 Requirements
 
-Python 3.x
+Python 3.8+
+requests
+beautifulsoup4
+colorama
+
 
 ### 🧑‍💻 Usage Examples
 1) Show homoglyphs for a single character
