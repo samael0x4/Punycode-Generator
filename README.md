@@ -11,29 +11,57 @@
 - Optional DNS resolution check for generated homoglyph domains.
 
 ---
-
-## Install (Linux / macOS / Windows)
-
+### 🔧 Installation
+# 🐧 Linux (Ubuntu/Debian/Kali)
+ Install git if not installed
 ```bash
-# clone repo
+sudo apt update && sudo apt install git -y
+
+# Clone repo
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
+
+# Install requirements
+pip install -r requirements.txt
+
+# Run tool
+python3 punychain.py -h
 ```
 
-# create venv (recommended)
-```bash
-python3 -m venv venv
-source venv/bin/activate    # macOS / Linux
-venv\Scripts\activate       # Windows PowerShell
+# 🍏 macOS
+ Install Homebrew if missing
+ ```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install git
+brew install git
+
+# Clone repo
+git clone https://github.com/samael0x4/PunyChain.git
+cd PunyChain
+
+# Install requirements
+pip3 install -r requirements.txt
+
+# Run tool
+python3 punychain.py -h
 ```
-# install deps
+# 🪟 Windows (PowerShell)
+
+Install Git
+
+Download from: https://git-scm.com/downloads/win
+
+During install, check “Add Git to PATH”.
+
+Clone repo and install requirements
 ```bash
+git clone https://github.com/samael0x4/PunyChain.git
+cd PunyChain
 pip install -r requirements.txt
-```
-# run directly
-```bash
 python punychain.py -h
 ```
+
 
 ### 📋 Requirements
 
