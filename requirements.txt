@@ -1,5 +1,3 @@
 requests
-httpx
-idna
-dnspython
-aiodns
+beautifulsoup4
+colorama
