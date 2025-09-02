@@ -1,56 +1,51 @@
-# PunyChain — Punycode / Homoglyph Recon & CSP Chain Tool
-**PunyChain**  extends punycode/homoglyph recon with a **header scanner**, **weak-CSP detector**, and **POC builder** to help bug hunters test chained attack surfaces (homoglyphs → header misconfig → code load).
+## 🔗 PunyChain
+Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder
+
+
+### ⚡About
+--> PunyChain is a bug bounty & red team recon tool that helps you:
+
+🔠 Generate homoglyph (punycode) variants for alphabets and domains
+
+🌐 Detect possible punycode phishing vectors (IDN homograph attacks)
+
+🕵️ Scan websites for missing/weak security headers
+
+⚠️ Detect weak Content-Security-Policy (CSP) configurations
+
+🚀 Suggest PoC payloads for chaining homoglyphs with CSP misconfigs → Account Takeover potential
+
+
 
 ---
-
-## Features
-- Generate homoglyph variants for domains and single alphabet characters.
-- Fetch headers and analyze Content-Security-Policy & security headers.
-- Detect weak CSP indicators (`unsafe-inline`, wildcards, missing script-src).
-- Generate local POC HTML snippets showing how a homoglyph-hosted script could be loaded.
-- Optional DNS resolution check for generated homoglyph domains.
-
----
-### 🔧 Installation
-# 🐧 Linux (Ubuntu/Debian/Kali)
+## 🔧 Installation
+ 🐧 Linux (Ubuntu/Debian/Kali)
  Install git if not installed
 ```bash
 sudo apt update && sudo apt install git -y
-
-# Clone repo
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
-
-# Install requirements
 pip install -r requirements.txt
-
-# Run tool
 python3 punychain.py -h
+
 ```
 
-# 🍏 macOS
+ 🍏 macOS
  Install Homebrew if missing
  ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Install git
 brew install git
-
-# Clone repo
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
-
-# Install requirements
 pip3 install -r requirements.txt
-
-# Run tool
 python3 punychain.py -h
+
 ```
-# 🪟 Windows (PowerShell)
+ 🪟 Windows (PowerShell)
 
 Install Git
 
-Download from: https://git-scm.com/downloads/win
+Download from: https://git-scm.com/downloads/win  
 
 During install, check “Add Git to PATH”.
 
@@ -60,52 +55,58 @@ git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
 pip install -r requirements.txt
 python punychain.py -h
+
 ```
 
 
-### 📋 Requirements
-
+## 📋 Requirements
+```bash
 Python 3.8+
 requests
 beautifulsoup4
 colorama
-
-
-### 🧑‍💻 Usage Examples
-1) Show homoglyphs for a single character
-```bash
-python punychain.py -a a
 ```
-2) Scan headers / CSP for a target
+
+## 🧑‍💻 Usage Examples
 ```bash
-python punychain.py -d tesla.com --scan-headers
+# Show help
+punychain -h
+
+# Generate homoglyphs for single alphabet
+punychain -a a
+
+# Generate homoglyph domain variants
+punychain -d tesla.com
+
+# Scan headers & weak CSP for a target
+punychain -u https://target.com
 ```
-3) Generate homoglyph variants for a domain
+
+## 🔥 Example
 ```bash
-python punychain.py -d tesla.com --generate
+$ punychain -d google.com
+
+gооgle.com  --> xn--ggle-0nda.com
+gοogle.com  --> xn--ggle-v2a9629b.com
 ```
-4) Generate variants + try DNS resolution + generate POC files
 ```bash
-python punychain.py -d tesla.com --generate --resolve --build-pocs
+$ punychain -u https://target.com
 
-# This will write poc_*.html files to current directory for quick review.
+[FOUND] Content-Security-Policy: script-src https://target.com
+[MISSING] Strict-Transport-Security
+[!] Weak CSP detected → Potential for homoglyph injection!
+[POC] Try hosting a script on homoglyph domain and inject via CSP
 ```
-### How it helps bug hunters
-
-Recon layer: find homoglyph domains that impersonate the target (used in phishing or resource hosting).
-
-Detection layer: identify weak CSPs and missing headers that could allow external script loading.
-
-POC layer: produce quick test files to demonstrate how a homoglyph-hosted script would be included if the CSP allows it.
 
 ### 📜 License
 
-This project is licensed under the MIT License – see the LICENSE
- file for details.
+MIT License © 2025 samael_0x4
 
-### Ethics & Disclaimer
+### ⚖️ Disclaimer
 
-This tool is for authorized security testing only (bug bounty programs, pentests with permission, educational labs). Do NOT use this against systems you don't have permission to test. The author (samael_0x4) is not responsible for misuse.
+This tool is for educational and security research purposes only.
+Do not use against systems you don’t have permission to test.
+The author takes no responsibility for misuse.
 
 ### 💬 Support
 
