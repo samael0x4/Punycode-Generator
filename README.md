@@ -1,9 +1,10 @@
 ## 🔗 PunyChain
-Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder
+Homoglyph Generator + DNS Resolver + Header Scanner + Weak CSP Detector + PoC Builder
 
 
-### ⚡About
---> PunyChain is a bug bounty & red team recon tool that helps you:
+### ⚡ About
+
+PunyChain is a bug bounty & red team recon tool that helps you:
 
 🔠 Generate homoglyph (punycode) variants for alphabets and domains
 
@@ -13,8 +14,9 @@ Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder
 
 ⚠️ Detect weak Content-Security-Policy (CSP) configurations
 
-🚀 Suggest PoC payloads for chaining homoglyphs with CSP misconfigs → Account Takeover potential
+🔍 Check which homoglyph domains are Alive/Dead via DNS resolve
 
+🚀 Build PoC HTML files to demonstrate homoglyph + CSP chaining
 
 
 ---
@@ -22,11 +24,10 @@ Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder
  🐧 Linux (Ubuntu/Debian/Kali)
  Install git if not installed
 ```bash
-sudo apt update && sudo apt install git -y
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
 pip install -r requirements.txt
-python3 punychain.py -h
+python3 punychain.py
 
 ```
 
@@ -38,7 +39,8 @@ brew install git
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
 pip3 install -r requirements.txt
-python3 punychain.py -h
+python3 punychain.py
+
 
 ```
  🪟 Windows (PowerShell)
@@ -54,7 +56,8 @@ Clone repo and install requirements
 git clone https://github.com/samael0x4/PunyChain.git
 cd PunyChain
 pip install -r requirements.txt
-python punychain.py -h
+python punychain.py
+
 
 ```
 
@@ -68,35 +71,21 @@ colorama
 ```
 
 ## 🧑‍💻 Usage Examples
+Run the tool directly:
 ```bash
-# Show help
-punychain -h
+python3 punychain.py
 
-# Generate homoglyphs for single alphabet
-punychain -a a
-
-# Generate homoglyph domain variants
-punychain -d tesla.com
-
-# Scan headers & weak CSP for a target
-punychain -u https://target.com
 ```
 
-## 🔥 Example
-```bash
-$ punychain -d google.com
+## 💡 Tips for Bug Hunters
 
-gооgle.com  --> xn--ggle-0nda.com
-gοogle.com  --> xn--ggle-v2a9629b.com
-```
-```bash
-$ punychain -u https://target.com
+DNS resolver helps you spot which homoglyph domains are active.
 
-[FOUND] Content-Security-Policy: script-src https://target.com
-[MISSING] Strict-Transport-Security
-[!] Weak CSP detected → Potential for homoglyph injection!
-[POC] Try hosting a script on homoglyph domain and inject via CSP
-```
+If CSP is weak (*, http:, unsafe-inline) → use PoC builder for quick exploitation demo.
+
+PoC HTML can be attached to bug bounty reports for better impact.
+
+Try homoglyphs in subdomains, login forms, and email spoofing tests.
 
 ### 📜 License
 
