@@ -18,6 +18,8 @@ PunyChain is a bug bounty & red team recon tool that helps you:
 
 🚀 Build PoC HTML files to demonstrate homoglyph + CSP chaining
 
+![PunyChain Demo](optimized_punychain.gif)
+
 
 ---
 ## 🔧 Installation
