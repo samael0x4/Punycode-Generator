@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 PunyChain Interactive
-Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder
+Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder + DNS Resolver
 Author: samael_0x4
 """
 
 import requests
 import idna
+import socket
 from colorama import Fore, Style, init
 
 # Init colors
@@ -25,8 +26,8 @@ def banner():
 ██║     ╚██████╔╝██║ ╚████║╚██████╔╝╚██████╗██║  ██║██║  ██║██║██║ ╚████║
 ╚═╝      ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝
 """)
-    print(Fore.YELLOW + "       🔗 PunyChain — Homoglyph Generator + CSP Scanner 🔗")
-    print(Fore.GREEN + "              Made with ❤️ by samael_0x4\n")
+    print(Fore.YELLOW + "              🔗 PunyChain — Homoglyph + CSP Scanner 🔗")
+    print(Fore.GREEN + "                     Made with ❤️ by samael_0x4\n")
 
 # --------------------------------------
 # Homoglyph dictionary
@@ -45,6 +46,16 @@ HOMOGLYPHS = {
     "U": ["Ù", "Ú", "Û", "Ü", "Ū", "Ů", "Ű", "Ų"],
     "C": ["Ç", "Ć", "Č", "Ĉ", "Ċ", "С"],
 }
+
+# --------------------------------------
+# DNS Resolver
+# --------------------------------------
+def resolve_domain(domain):
+    try:
+        socket.gethostbyname(domain)
+        return True
+    except:
+        return False
 
 # --------------------------------------
 # Generate homoglyphs for single alphabet
@@ -72,7 +83,9 @@ def generate_domain(domain):
                 new_domain = domain.replace(letter, variant)
                 try:
                     puny = idna.encode(new_domain).decode()
-                    print(Fore.GREEN + f"   {puny}  --->  {new_domain}")
+                    alive = resolve_domain(new_domain)
+                    status = Fore.GREEN + "Alive" if alive else Fore.RED + "Dead"
+                    print(Fore.GREEN + f"   {puny}  --->  {new_domain}   [{status}]")
                 except:
                     pass
 
@@ -130,7 +143,7 @@ def menu():
     while True:
         print(Fore.YELLOW + "\nChoose an option:")
         print("1) Generate homoglyphs for a single alphabet")
-        print("2) Generate homoglyph variants for a domain")
+        print("2) Generate homoglyph variants for a domain (with DNS check)")
         print("3) Scan target URL for headers & weak CSP")
         print("4) Exit")
 
