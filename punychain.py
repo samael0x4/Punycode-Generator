@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 """
 PunyChain Interactive
-Homoglyph Generator + Header Scanner + Weak CSP Detector + PoC Builder + DNS Resolver
+Homoglyph Generator + DNS Resolver + Header Scanner + Weak CSP Detector + PoC Builder + Export Report
 Author: samael_0x4
 """
 
 import requests
 import idna
 import socket
+import time, sys
 from colorama import Fore, Style, init
 
 # Init colors
@@ -58,6 +59,16 @@ def resolve_domain(domain):
         return False
 
 # --------------------------------------
+# Loading Animation
+# --------------------------------------
+def loading(msg="Scanning"):
+    for i in range(6):
+        sys.stdout.write(Fore.YELLOW + f"\r{msg}{'.' * (i % 4)}   ")
+        sys.stdout.flush()
+        time.sleep(0.3)
+    print("\r" + " " * 30, end="\r")  # clear line
+
+# --------------------------------------
 # Generate homoglyphs for single alphabet
 # --------------------------------------
 def generate_alphabet(letter):
@@ -94,28 +105,81 @@ def generate_domain(domain):
 # --------------------------------------
 def scan_headers(url):
     print(Fore.CYAN + f"\n[+] Scanning headers for: {url}")
+    loading("Scanning headers")  # animated loader
+
+    found_vuln = False
+    weak_csp = False
+    missing_headers = []
+    results = []
+
     try:
         response = requests.get(url, timeout=10)
         headers = response.headers
         csp = headers.get("Content-Security-Policy", None)
 
+        # Check CSP
         if csp:
-            print(Fore.GREEN + f"[FOUND] CSP: {csp}")
             if "*" in csp or "http:" in csp or "unsafe-inline" in csp:
-                print(Fore.YELLOW + "[!] Weak CSP detected → Possible homoglyph injection vector")
-                return True  # weak CSP found
+                line = f"[! WEAK CSP] {csp}"
+                print(Fore.RED + line)
+                results.append(line)
+                weak_csp = True
+                found_vuln = True
+            else:
+                line = f"[FOUND] CSP: {csp}"
+                print(Fore.GREEN + line)
+                results.append(line)
         else:
-            print(Fore.RED + "[MISSING] Content-Security-Policy")
+            line = "[MISSING] Content-Security-Policy"
+            print(Fore.YELLOW + line)
+            results.append(line)
+            missing_headers.append("Content-Security-Policy")
+            found_vuln = True
 
+        # Check other important headers
         for h in ["X-Frame-Options", "Strict-Transport-Security", "X-Content-Type-Options", "Referrer-Policy"]:
             if h in headers:
-                print(Fore.GREEN + f"[FOUND] {h}: {headers[h]}")
+                line = f"[FOUND] {h}: {headers[h]}"
+                print(Fore.GREEN + line)
+                results.append(line)
             else:
-                print(Fore.RED + f"[MISSING] {h}")
+                line = f"[MISSING] {h}"
+                print(Fore.YELLOW + line)
+                results.append(line)
+                missing_headers.append(h)
+                found_vuln = True
 
     except Exception as e:
-        print(Fore.RED + f"[!] Error: {e}")
-    return False
+        line = f"[!] Error: {e}"
+        print(Fore.RED + line)
+        results.append(line)
+
+    # Summary
+    summary_lines = []
+    summary_lines.append("\n--- Scan Summary ---")
+    if found_vuln:
+        if weak_csp:
+            summary_lines.append("🔥 Weak CSP detected → Possible homoglyph injection → Account Takeover risk")
+        if missing_headers:
+            summary_lines.append(f"⚠️ Missing headers ({', '.join(missing_headers)}) → Potential security gaps")
+        summary_lines.append("👉 Recommended: Report these issues for bounty impact")
+        for line in summary_lines:
+            print(Fore.MAGENTA + line)
+    else:
+        summary_lines.append("✅ All important headers are present and strong → Safe side")
+        for line in summary_lines:
+            print(Fore.GREEN + line)
+
+    # Save report
+    save = input(Fore.CYAN + "\n[?] Save scan results to file? (y/n): ").strip().lower()
+    if save == "y":
+        filename = "scan_report.txt"
+        with open(filename, "w", encoding="utf-8") as f:
+            for line in results + summary_lines:
+                f.write(line + "\n")
+        print(Fore.MAGENTA + f"[+] Report saved as {filename}")
+
+    return found_vuln
 
 # --------------------------------------
 # PoC Builder
